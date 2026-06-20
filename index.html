@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remembering Alexis Korner — Still With The Blues</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>
+  :root {
+    --ink: #1c1e21; /* 酸化した鉄黒・古いインクの黒 */
+    --paper: #f5f2eb; /* 古いペーパーバックのような温かみのあるライトベージュ */
+    --paper-dark: #ebe6da; /* ホバーやカード用の少し濃い紙色 */
+    --gold: #7a5a28; /* 暗めの真鍮・古いゴールド */
+    --gold-dim: rgba(122, 90, 40, 0.45);
+    --warm-gray: #7d776c; /* セピア調のグレー */
+    --line: rgba(28, 30, 33, 0.08); /* 境界線 */
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  
+  body {
+    margin: 0;
+    background: var(--paper) url("retro_paper_bg.png") repeat; /* 生成されたヴィンテージ紙の模様画像をリピート */
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.8;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 物理的な古い紙の繊維・ざらつきを与えるSVGノイズ */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.022; /* 明るい背景に馴染む最適なノイズ不透明度 */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  .lang-toggle {
+    position: fixed;
+    top: 28px;
+    right: 28px;
+    z-index: 50;
+    display: flex;
+    border: 1px solid var(--gold-dim);
+    border-radius: 1px;
+    overflow: hidden;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    background: var(--paper);
+  }
+
+  .lang-toggle button {
+    background: transparent;
+    color: var(--warm-gray);
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    transition: color 0.3s, background 0.3s;
+  }
+
+  .lang-toggle button.active {
+    color: var(--paper); /* テキストを紙色に反転 */
+    background: var(--gold); /* 背景をゴールドに */
+    font-weight: 500;
+  }
+
+  [data-ja] { display: none; }
+  body.lang-ja [data-en] { display: none; }
+  body.lang-ja [data-ja] { display: inline; }
+  body.lang-ja [data-ja].block { display: block; }
+
+  section {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 80px 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  section:last-of-type { border-bottom: none; }
+
+  /* スクロールフェードイン */
+  .reveal {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 1.8s cubic-bezier(0.15, 0.85, 0.3, 1), transform 1.8s cubic-bezier(0.15, 0.85, 0.3, 1);
+  }
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 24px;
+    font-weight: 500;
+  }
+
+  h1 {
+    font-family: 'EB Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(34px, 5.5vw, 52px);
+    line-height: 1.25;
+    margin: 0 0 28px;
+    color: var(--ink);
+    letter-spacing: -0.012em;
+  }
+
+  h2 {
+    font-family: 'EB Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(26px, 3.8vw, 32px);
+    line-height: 1.35;
+    margin: 0 0 32px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    margin: 0 0 20px;
+    color: rgba(28, 30, 33, 0.82); /* 明るい背景で読みやすいインク色 */
+  }
+
+  p.lede {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(18px, 2.5vw, 22px);
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 32px;
+    border-left: 2px solid var(--gold-dim);
+    padding-left: 18px;
+  }
+
+  /* Hero Frame */
+  .hero-frame {
+    margin-top: 72px;
+    position: relative;
+    text-align: center;
+  }
+
+  .hero-frame img {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 1px;
+    box-shadow: 0 8px 30px rgba(28,30,33,0.15); /* 影もソフトに */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 2s ease, transform 2s cubic-bezier(0.15, 0.85, 0.3, 1);
+  }
+
+  .hero-frame img.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-caption {
+    font-size: 11px;
+    color: var(--warm-gray);
+    margin-top: 24px;
+    letter-spacing: 0.02em;
+  }
+
+  .artifact-img {
+    width: 100%;
+    border-radius: 1px;
+    margin: 40px 0 16px;
+    box-shadow: 0 6px 20px rgba(28,30,33,0.1);
+    transition: opacity 0.4s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .artifact-img:hover {
+    opacity: 0.95;
+    transform: scale(1.008);
+  }
+
+  .caption {
+    font-size: 11px;
+    color: var(--warm-gray);
+    margin: 0 0 40px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Timeline */
+  .timeline {
+    margin-top: 12px;
+    border-left: 1px solid var(--line);
+    padding-left: 32px;
+  }
+
+  .entry {
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .entry::before {
+    content: '';
+    position: absolute;
+    left: -34.5px;
+    top: 9px;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  .entry .date {
+    font-size: 12px;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .entry p {
+    margin: 0;
+    font-size: 14.5px;
+    color: rgba(28, 30, 33, 0.76);
+  }
+
+  /* note Link */
+  .note-link {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 16px 36px;
+    border: 1px solid var(--gold);
+    border-radius: 1px;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    transition: background 0.4s, color 0.4s, border-color 0.4s;
+  }
+
+  .note-link:hover {
+    background: var(--gold);
+    color: var(--paper); /* 文字を紙色に反転 */
+  }
+
+  /* Closing Call */
+  .closing {
+    text-align: left;
+  }
+
+  .contact-line {
+    margin-top: 32px;
+    font-size: 13px;
+    color: var(--gold);
+  }
+
+  .contact-line a {
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold-dim);
+    transition: border-color 0.3s;
+    font-weight: 500;
+  }
+  .contact-line a:hover {
+    border-color: var(--gold);
+  }
+
+  /* Footnote Style for Citations */
+  .footnote {
+    display: block;
+    font-size: 11px;
+    color: var(--warm-gray);
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  footer {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 28px 100px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    color: rgba(28, 30, 33, 0.4);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width:600px) {
+    section { padding: 50px 22px; }
+    .hero-top { padding-top: 70px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-toggle">
+  <button id="btn-en" class="active">EN</button>
+  <button id="btn-ja">日本語</button>
+</div>
+
+<section class="hero hero-top reveal">
+  <p class="eyebrow"><span data-en>Towards the centenary, 2028</span><span data-ja>100周年に向けて、2028年</span></p>
+  <h1>
+    <span data-en>Remembering Alexis Korner — Still With The Blues</span>
+    <span data-ja>Remembering Alexis Korner — Still With The Blues</span>
+  </h1>
+  <p class="lede">
+    <span data-en>Alexis Korner (1928–1984) — the father of British blues.</span>
+    <span data-ja>アレクシス・コーナー（1928–1984）——英国ブルースの父。</span>
+  </p>
+  
+
+
+  <div class="hero-frame">
+    <img id="hero-img" src="ak_autograph.png" alt="Signed photograph of Alexis Korner, inscribed 'Still With The Blues'">
+    <p class="hero-caption">
+      <span data-en>Given by his son, Damian Korner.</span>
+      <span data-ja>息子、ダミアン・コーナーから受け取った一枚。</span>
+    </p>
+  </div>
+</section>
+
+<section class="closing reveal">
+  <p class="eyebrow"><span data-en>Looking for fellow travelers</span><span data-ja>仲間を探しています</span></p>
+  <h2><span data-en>If you are planning something for 2028</span><span data-ja>2028年に向けて、何か動いている方へ</span></h2>
+  <p>
+    <span data-en>There is no estate managing Alexis Korner's legacy any more. For nearly thirty years I have been collecting what's left of it — his mandolin, his records, the people who knew him — and writing it down.</span>
+    <span data-ja>アレクシス・コーナーのレガシーを管理するエステートは、もう存在しません。30年近く、彼に関するもの——マンドリン、レコード、彼を知っていた人々——を集め、記録してきました。</span>
+  </p>
+  <p>
+    <span data-en>If you are organising something for his centenary in 2028, or simply knew him and have a story to tell, I would like to hear from you.</span>
+    <span data-ja>100周年に向けて何か企画している方、あるいは彼を知っていて話したいことがある方、ぜひお声がけください。</span>
+  </p>
+  <p class="contact-line">
+    <span data-en>Instagram: </span><span data-ja>インスタグラム：</span><a href="https://instagram.com/seanbluemink" target="_blank" rel="noopener">@seanbluemink</a>
+  </p>
+</section>
+
+<section class="reveal">
+  <p class="eyebrow"><span data-en>The full record</span><span data-ja>全記録</span></p>
+  <h2><span data-en>Read the chronicle</span><span data-ja>連載を読む</span></h2>
+  <p>
+    <span data-en>The mandolin, the photograph, the names and dates above — they are fragments. The fuller account — names, objects, the people met along the way — is written in Japanese on note, in instalments, still growing since January 2026.</span>
+    <span data-ja>マンドリン、写真、年表に並ぶ名前と日付——それらは断片です。もっと多くの名前、モノ、出会った人々についての記録を、2026年1月から日本語でnoteに書き続けています。今も増え続けています。</span>
+  </p>
+  <a class="note-link" href="https://note.com/suat_koala3752/m/m043d3df6e1eb" target="_blank" rel="noopener">
+    <span data-en>Still With The Blues — on note (in Japanese) ↗</span><span data-ja>Still With The Blues — noteで読む（日本語） ↗</span>
+  </a>
+</section>
+
+<section class="reveal">
+  <p class="eyebrow"><span data-en>The instrument</span><span data-ja>楽器</span></p>
+  <h2><span data-en>It is not behind glass</span><span data-ja>ガラスの向こうではない</span></h2>
+  <a href="https://note.com/suat_koala3752/n/n3ca7f5fb0d39" target="_blank" rel="noopener" title="Read the mandolin story on note">
+    <img class="artifact-img" src="mandline_1280x720.png" alt="JTL mandolin, circa 1900, owned by Alexis Korner, detail photographs">
+  </a>
+  <p class="caption">
+    <span data-en>JTL (Jérôme Thibouville-Lamy), Paris, c.1900. Played by Alexis Korner.</span>
+    <span data-ja>JTL（ジェローム・ティボヴィル＝ラミー）製, パリ、1900年前後。アレクシス・コーナーが使用。</span>
+  </p>
+  <p>
+    <span data-en>It was broken when it was given to me — which is, in part, why it was never sold. I cannot say with certainty when I received it. A photograph taken for an old fan site carries a 2007 timestamp, so it was in my hands by then. Before that, the date is gone from memory. What remains is the object itself: cracked, inlaid, unmistakably his.</span>
+    <span data-ja>受け取った時、壊れていました。だからこそ、これは売られることなく、ここに残っています。正確にいつ受け取ったのか、今となっては思い出せません。古いファンサイト用に撮った写真には2007年の記録が残っているので、その時にはすでに手元にありました。それより前のことは、記憶の外にあります。残っているのはモノそのものです。ひびが入り、象嵌が施され、まぎれもなく彼のもの。</span>
+  </p>
+</section>
+
+<section class="reveal">
+  <p class="eyebrow"><span data-en>A thirty-year search</span><span data-ja>30年にわたる探求</span></p>
+  <h2><span data-en>Postmarks</span><span data-ja>旅の消印</span></h2>
+  <div class="timeline">
+    <div class="entry">
+      <span class="date">1998.11</span>
+      <p><span data-en>"The Rolling Stones: A Life on the Road" is published. A name in its pages — Alexis Korner — catches my attention for no reason I can explain. I buy an album at random. It is "Testament". I am floored.</span><span data-ja>『The Rolling Stones: A Life On The Road』刊行。ページの中の一つの名前——アレクシス・コーナー——に、説明できない理由で惹かれる。手当たり次第に買った一枚が『Testament』。打ちのめされる。</span></p>
+    </div>
+    <div class="entry">
+      <span class="date">2000</span>
+      <p><span data-en>I start a small discography site on Geocities — floppy disk backups date it to early that year.</span><span data-ja>Geocitiesで小さなディスコグラフィーサイトを開設。フロッピーディスクのバックアップに残る日付が、この年の初め頃だったことを示している。</span></p>
+    </div>
+    <div class="entry">
+      <span class="date">2001</span>
+      <p><span data-en>I register my own domain for the site.</span><span data-ja>サイト用に独自ドメインを取得。</span></p>
+    </div>
+    <div class="entry">
+      <span class="date">2017</span>
+      <p><span data-en>I let the domain go.</span><span data-ja>そのドメインを手放す。</span></p>
+    </div>
+    <div class="entry">
+      <span class="date">2026.01</span>
+      <p><span data-en>"Still With The Blues" begins on note. Over fifty essays since, written in Japanese.</span><span data-ja>note連載「Still With The Blues」開始。以後58本以上の記事を日本語で執筆。</span></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span data-en>A grassroots record, kept in Japan. Not affiliated with any label or estate.</span>
+  <span data-ja>日本で個人が続けている記録です。レーベルやエステートとの関係はありません。</span>
+</footer>
+
+<script>
+  // 言語切り替えスクリプト
+  const body = document.body;
+  document.getElementById('btn-ja').addEventListener('click', () => {
+    body.classList.add('lang-ja');
+    document.getElementById('btn-ja').classList.add('active');
+    document.getElementById('btn-en').classList.remove('active');
+  });
+  document.getElementById('btn-en').addEventListener('click', () => {
+    body.classList.remove('lang-ja');
+    document.getElementById('btn-en').classList.add('active');
+    document.getElementById('btn-ja').classList.remove('active');
+  });
+
+  // ヒーロー画像の遅延表示
+  window.addEventListener('load', () => {
+    document.getElementById('hero-img').classList.add('loaded');
+  });
+
+  // スクロールフェードイン (Intersection Observer)
+  const revealElements = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target); // 一度表示されたら監視を外す
+      }
+    });
+  }, {
+    threshold: 0.05, // 5%見えたら発火
+    rootMargin: "0px 0px -40px 0px" // 画面下部から少し手前で発火させる
+  });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+
+
+</script>
+
+</body>
+</html>
