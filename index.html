@@ -349,6 +349,8 @@
   </p>
   <p class="contact-line">
     <span data-en>Instagram: </span><span data-ja>インスタグラム：</span><a href="https://instagram.com/seanbluemink" target="_blank" rel="noopener">@seanbluemink</a>
+    <br>
+    <span data-en>Email: </span><span data-ja>メール：</span><a href="#" id="email-link">suat25sean [at] gmail [dot] com (+ak100)</a>
   </p>
 </section>
 
@@ -447,7 +449,11 @@
 
   revealElements.forEach(el => revealObserver.observe(el));
 
-
+  // クローラー対策：メールアドレスをJSで組み立てる
+  document.getElementById('email-link').addEventListener('click', function(e){
+    e.preventDefault();
+    window.location.href = 'mailto:' + 'suat25sean+ak100' + '@' + 'gmail.com';
+  });
 </script>
 
 </body>
