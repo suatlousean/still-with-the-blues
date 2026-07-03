@@ -249,24 +249,86 @@
     color: rgba(28, 30, 33, 0.76);
   }
 
-  /* note Link */
-  .note-link {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 16px 36px;
-    border: 1px solid var(--gold);
-    border-radius: 1px;
-    color: var(--gold);
+  /* note Card */
+  .note-card {
+    display: block;
+    margin-top: 24px;
+    padding: 28px;
+    background: var(--paper-dark);
+    border: 1px solid var(--line);
+    border-radius: 2px;
     text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    font-weight: 500;
-    transition: background 0.4s, color 0.4s, border-color 0.4s;
+    color: var(--ink);
+    position: relative;
+    box-shadow: 0 4px 15px rgba(28,30,33,0.03);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s, border-color 0.4s;
+    overflow: hidden;
   }
 
-  .note-link:hover {
+  .note-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
     background: var(--gold);
-    color: var(--paper); /* 文字を紙色に反転 */
+    transition: width 0.3s ease;
+  }
+
+  .note-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(28,30,33,0.06);
+    border-color: var(--gold-dim);
+  }
+
+  .note-card:hover::before {
+    width: 6px;
+  }
+
+  .note-card-badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-block;
+    border: 1px solid var(--gold-dim);
+    padding: 3px 8px;
+    border-radius: 1px;
+    margin-bottom: 16px;
+    background: var(--paper);
+  }
+
+  .note-card-title {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(20px, 3vw, 24px);
+    font-weight: 500;
+    margin: 0 0 8px 0;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+
+  .note-card-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--warm-gray);
+    margin: 0 0 20px 0;
+  }
+
+  .note-card-action {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.3s;
+  }
+
+  .note-card:hover .note-card-action {
+    gap: 12px;
   }
 
   /* Closing Call */
@@ -409,8 +471,19 @@
     <span data-en>The mandolin, the photograph, the names and dates above — they are fragments. The fuller account — names, objects, the people met along the way — is written in Japanese on note, in instalments, still growing since January 2026.</span>
     <span data-ja>マンドリン、写真、年表に並ぶ名前と日付——それらは断片です。もっと多くの名前、モノ、出会った人々についての記録を、2026年1月から日本語でnoteに書き続けています。今も増え続けています。</span>
   </p>
-  <a class="note-link" href="https://note.com/suat_koala3752/m/m043d3df6e1eb" target="_blank" rel="noopener">
-    <span data-en>Still With The Blues — on note (in Japanese) ↗</span><span data-ja>Still With The Blues — noteで読む（日本語） ↗</span>
+  <a class="note-card" href="https://note.com/suat_koala3752/m/m043d3df6e1eb" target="_blank" rel="noopener">
+    <div class="note-card-badge">note</div>
+    <div class="note-card-content">
+      <h3 class="note-card-title">Still With The Blues</h3>
+      <p class="note-card-desc">
+        <span data-en>The complete chronicle of this search, published in installments since January 2026.</span>
+        <span data-ja>この探求の全記録。2026年1月よりnoteにて連載中。</span>
+      </p>
+      <div class="note-card-action">
+        <span data-en>Read the chronicle ↗</span>
+        <span data-ja>連載を読む ↗</span>
+      </div>
+    </div>
   </a>
 </section>
 
