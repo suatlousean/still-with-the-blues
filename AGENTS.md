@@ -1,6 +1,6 @@
 # Codex 作業ガイド（ak100）
 
-`ak100` は親の `aknewapp` とは独立した Git リポジトリである。Claude Code から Antigravity に引き継がれた作業を、Codex は依頼された範囲で補助する。
+`ak100` は親の `aknewapp` とは独立した Git リポジトリである。現在は Codex を中心に作業する。Antigravity を使うかどうかとその役割は、依頼ごとにユーザーが決める。
 
 - 作業前にこのフォルダで `git status -sb` を確認し、既存の変更を上書き・削除しない。
 - 親リポジトリとは別に、ブランチ、コミット、remote、同期状態を扱う。
